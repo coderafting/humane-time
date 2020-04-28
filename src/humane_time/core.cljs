@@ -2,7 +2,8 @@
   (:require [humane-time.ops :as ops]))
 
 (defn readable-date
-  "Returns a string of types: 
+  "Accepts date-string only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+   Returns a string similar to: 
    April 27, 2020 or Apr 27, 2020 or Monday, April 27, 2020 or Mon, April 27, 2020 or Mon, Apr 27, 2020.
    The optional options map dictates the return format. It includes the following keys:
    :day-name? - defaults to true. 
@@ -28,7 +29,7 @@
   readable-year
   [val]
   (cond
-    (neg? val) (throw (ExceptionInfo. "val (number of years) cannot be negative."))
+    (neg? val) (throw (ExceptionInfo. (str "val (number of years) cannot be negative: " val)))
     (and (>= val 0) (< val 1000)) (str val " " (ops/singular->plural "year" val))
     (and (>= val 1000) (< val 1000000)) (str (int (/ val 1000)) " thousand years")
     (and (>= val 1000000) (< val 1000000000)) (str (int (/ val 1000)) " million years")
@@ -37,16 +38,8 @@
     (= val 1000000000000000) "a quadrillion years"
     :else "more than a quadrillion years"))
 
-(defn
-  ^{:doc "Returns a readable duration, but only in the highest unit, with lower bound of the value.
-          Example: if the duration is between 1 and 2 years (ex: 1 year 10 months), then it will return '1 year'.
-          Similarly, if the duration is between 10 to 11 months, then it will return '10 months'.
-          The input arg, time-interval, is of the type of the return value of 'duration-descriptor' fn.
-          Takes an optional approximation-string, defaults to 'about'."
-    :todo {1 "Use error-margin to compute approx timeline duration, rather than simply taking the lower bounds.
-              Maybe, an alternate return value can be offered with better approximation, with an 'about' string attached in each return value."
-           2 "Return a string that can describe the duration as: 5 years, 10 months, 2 weeks, 4 days, and 2 hours."}}
-  readable-duration
+(defn- readable-duration-helper
+  "A helper function to be used inside readable-duration fn."
   [time-interval & approximation-string]
   (let [years (:years time-interval)
         months (:months time-interval)
@@ -64,8 +57,32 @@
       (pos? hours) (str apprx-word " " hours " " (ops/singular->plural "hour" hours))
       :else "less than an hour")))
 
+(defn
+  ^{:doc "Accepts start and end strings only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+          Returns a readable duration, but only in the highest unit, with lower bound of the value.
+          Example: if the duration is between 1 and 2 years (ex: 1 year 10 months), then it will return '1 year'.
+          Similarly, if the duration is between 10 to 11 months, then it will return '10 months'.
+          Takes an optional approximation-string, defaults to 'about'."
+    :todo {1 "Use error-margin to compute approx timeline duration, rather than simply taking the lower bounds.
+              Maybe, an alternate return value can be offered with better approximation, with an 'about' string attached in each return value."
+           2 "Return a string that can describe the duration as: 5 years, 10 months, 2 weeks, 4 days, and 2 hours."}} 
+  readable-duration
+  [{:keys [start end approximation-string]}]
+  (cond
+    (and start end) (if approximation-string 
+                      (readable-duration-helper (ops/duration-descriptor start end) approximation-string)
+                      (readable-duration-helper (ops/duration-descriptor start end)))
+    (and start (not end)) (if approximation-string
+                            (readable-duration-helper (ops/duration-descriptor start) approximation-string)
+                            (readable-duration-helper (ops/duration-descriptor start)))
+    (and (not start) end) (if approximation-string
+                            (readable-duration-helper (ops/duration-descriptor end) approximation-string)
+                            (readable-duration-helper (ops/duration-descriptor end)))
+    :else (throw (ExceptionInfo. (str "Invalid inputs: " {:start start :end end})))))
+
 (defn readable-moment
-  "Describes a moment in histry. Useful for one-time events.
+  "Accepts date-string only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+   Describes a moment in histry. Useful for one-time events.
    Takes an optional moment descriptor map with the following keys:
    :prefix - defaults to 'Happened'.
    :suffix - defaults to 'ago'.
@@ -73,33 +90,33 @@
   [date-string & moement-desc-map]
   (str (or (:prefix (first moement-desc-map)) "Happened")
        " "
-       (readable-duration (ops/duration-descriptor date-string))
+       (readable-duration {:start date-string})
        " "
        (or (:suffix (first moement-desc-map)) "ago")))
 
-(defn period-helper-start
+(defn- period-helper-start
   [start period-desc-map]
   (str (or (:start-desc period-desc-map) "Started")
        " "
-       (readable-duration (ops/duration-descriptor start) (or (:approximation-string period-desc-map) "about"))
+       (readable-duration {:start start :approximation-string (or (:approximation-string period-desc-map) "about")})
        " "
        (or (:past-indicator period-desc-map) "ago")))
 
-(defn period-helper-end
+(defn- period-helper-end
   [end period-desc-map]
   (str (or (:end-desc period-desc-map) "Ended")
        " "
-       (readable-duration (ops/duration-descriptor end) (or (:approximation-string period-desc-map) "about"))
+       (readable-duration {:end end :approximation-string (or (:approximation-string period-desc-map) "about")})
        " "
        (or (:past-indicator period-desc-map) "ago")))
 
-(defn period-helper-active
+(defn- period-helper-active
   [start end period-desc-map]
   (str (or (:period-desc period-desc-map) "Went on for")
        " "
-       (readable-duration (ops/duration-descriptor start end) (or (:approximation-string period-desc-map) "about"))))
+       (readable-duration {:start start :end end :approximation-string (or (:approximation-string period-desc-map) "about")})))
 
-(defn period-helper-start-end
+(defn- period-helper-start-end
   [start end period-desc-map]
   (str (period-helper-start start period-desc-map)
        (or (:separator period-desc-map) " | ")
@@ -108,7 +125,7 @@
        (period-helper-end end period-desc-map)))
 
 (defn readable-period
-  "Expects that the time formats is appropriate.
+  "Accepts start and end strings only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
    Takes an optional period description map with the following keys:
    :start-desc - defaults to 'Started'.
    :end-desc - defaults to 'Ended'.
@@ -121,4 +138,4 @@
     (and start (nil? end)) (period-helper-start start period-desc)
     (and (nil? start) end) (period-helper-end end period-desc)
     (and start end) (period-helper-start-end start end period-desc)
-    :else (throw (ExceptionInfo. "Please check your inputs."))))
+    :else (throw (ExceptionInfo. (str "Invalid inputs: " {:start start :end end :period-desc period-desc})))))

@@ -21,8 +21,8 @@
 ;(duration-descriptor "1-1-1970")
 ;(singular->plural "ok" 2)
 ;(readable-year 2)
-;(readable-duration (duration-descriptor "15-5-1001"))
-;(readable-duration (duration-descriptor "15-5-1001") "Roughly")
+;(readable-duration {:start "15-05-1984" :end "15-05-1985" :approximation-string "roughly"})
+
 ;(duration-descriptor "15-5-1000")
 
 
@@ -32,3 +32,4 @@
 ;(period-descriptor {:start "15-05-1984"})
 ; (period-descriptor {:start "15-05-1984" :end "15-05-1986"})
 ;(readable-period {:start "15-05-1984" :end "15-05-1986" :period-desc {:separator ", "}})
+;(readable-period {:start "15-05-1984" :end "1987-15-05" :period-desc {:separator ", "}})

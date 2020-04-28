@@ -6,7 +6,6 @@
   :dependencies
   [[org.clojure/clojure "1.10.1" :scope "provided"]
    [org.clojure/clojurescript "1.10.597" :scope "provided"]
-   [tick "0.4.23-alpha"]
    [com.andrewmcveigh/cljs-time "0.5.2"]]
 
   :plugins
