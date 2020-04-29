@@ -1,13 +1,12 @@
-(defproject humane-time "0.1.0"
-            :description "A ClojureScript library to produce human readable time and intervals."
-            :url "http://example.com/FIXME"
-            :license {:name "Eclipse Public License"
-                      :url "http://www.eclipse.org/legal/epl-v10.html"}
+(defproject coderafting/humane-time "0.1.0"
+            :description "A ClojureScript library to produce human readable date-time and intervals."
+            :url "https://github.com/coderafting/humane-time"
+            :license {:name "The MIT License"
+                      :url "https://opensource.org/licenses/MIT"}
   :dependencies
   [[org.clojure/clojure "1.10.1" :scope "provided"]
    [org.clojure/clojurescript "1.10.597" :scope "provided"]
-   [com.andrewmcveigh/cljs-time "0.5.2"]
-   [org.clojure/test.check "1.0.0"]]
+   [com.andrewmcveigh/cljs-time "0.5.2"]]
 
   :plugins
   [[lein-cljsbuild "1.1.8"]
@@ -36,7 +35,8 @@
      [binaryage/devtools "0.9.11"]
      [cider/piggieback "0.4.2"]
      [figwheel-sidecar "0.5.19"]
-     [reagent "0.9.0-rc4"]]
+     [reagent "0.9.0-rc4"]
+     [org.clojure/test.check "1.0.0"]]
 
     :source-paths ["src" "env/dev/clj" "env/dev/cljs"]
     :resource-paths ["resources" "env/dev/resources" "target/cljsbuild"]
