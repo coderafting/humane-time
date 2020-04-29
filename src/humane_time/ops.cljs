@@ -1,5 +1,6 @@
-(ns 
- ^{:todo {1 "Possibility of accepting '1918-11-11T11:10:50' date-time format."}}
+(ns ^{:doc "Contains data and functions to be used by the functions in the core namespace."
+      :todo {1 "Possibility of accepting '1918-11-11T11:10:50' date-time format."
+             2 "Option for users to provide customer validators."}}
   humane-time.ops
   (:require [cljs.reader :as r]
             [cljs-time.core :as t]
@@ -39,7 +40,8 @@
          :day-name (week-index (t/day-of-week dt-obj))
          :day-name-short (week-index-short (t/day-of-week dt-obj))
          :datetime-obj dt-obj})
-      (throw (ExceptionInfo. (str "Invalid date-string: " {:day (r/read-string d) :month (r/read-string m) :year (r/read-string y)}))))))
+      (throw (ExceptionInfo. (str "Invalid date-string - :day " 
+                                  (r/read-string d) ", :month " (r/read-string m) ", :year " (r/read-string y)))))))
 
 (defn duration-descriptor
   "Returns a map that describes the duration between a start and end-time in different units.
@@ -47,8 +49,9 @@
    If the difference (in years) is 2 years and 10 months, then the value of :years will be 2, not 3. But, the value of :months will be 34.
    Similarly, if the difference in months is 5 months and 3 weeks, the the value of :months will be 5, not 6. But, the value of :weeks will be 23.
    If no end-time is provided, the the current time will be considered as the end-time."
-  [date-string & end-time]
-  (let [intrvl (t/interval (:datetime-obj (datetime-descriptor date-string)) (if end-time (:datetime-obj (datetime-descriptor (first end-time))) (t/time-now)))]
+  [date-string & end-time] 
+  (let [intrvl (t/interval (:datetime-obj (datetime-descriptor date-string))
+                           (if end-time (:datetime-obj (datetime-descriptor (first end-time))) (t/time-now)))]
     {:years (t/in-years intrvl)
      :months (t/in-months intrvl)
      :weeks (t/in-weeks intrvl)

@@ -6,7 +6,8 @@
   :dependencies
   [[org.clojure/clojure "1.10.1" :scope "provided"]
    [org.clojure/clojurescript "1.10.597" :scope "provided"]
-   [com.andrewmcveigh/cljs-time "0.5.2"]]
+   [com.andrewmcveigh/cljs-time "0.5.2"]
+   [org.clojure/test.check "1.0.0"]]
 
   :plugins
   [[lein-cljsbuild "1.1.8"]

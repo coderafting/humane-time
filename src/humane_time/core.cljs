@@ -1,4 +1,6 @@
-(ns humane-time.core
+(ns ^{:doc "Contains functions to be exposed to library users."
+      :todo {1 "Possibility of making it available for both clj and cljs."}}
+  humane-time.core
   (:require [humane-time.ops :as ops]))
 
 (defn readable-date
@@ -78,7 +80,7 @@
     (and (not start) end) (if approximation-string
                             (readable-duration-helper (ops/duration-descriptor end) approximation-string)
                             (readable-duration-helper (ops/duration-descriptor end)))
-    :else (throw (ExceptionInfo. (str "Invalid inputs: " {:start start :end end})))))
+    :else (throw (ExceptionInfo. (str "Invalid inputs - :start " start ", :end " end)))))
 
 (defn readable-moment
   "Accepts date-string only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
@@ -138,4 +140,4 @@
     (and start (nil? end)) (period-helper-start start period-desc)
     (and (nil? start) end) (period-helper-end end period-desc)
     (and start end) (period-helper-start-end start end period-desc)
-    :else (throw (ExceptionInfo. (str "Invalid inputs: " {:start start :end end :period-desc period-desc})))))
+    :else (throw (ExceptionInfo. (str "Invalid inputs - :start " start ", :end " end ", :period-desc " period-desc)))))
