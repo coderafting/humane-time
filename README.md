@@ -2,28 +2,22 @@
 [![Clojars Project](https://img.shields.io/clojars/v/coderafting/humane-time.svg)](https://clojars.org/coderafting/humane-time)
 [![cljdoc badge](https://cljdoc.org/badge/coderafting/humane-time)](https://cljdoc.org/d/coderafting/humane-time/CURRENT)
 
-A ClojureScript library to produce human readable date-time and intervals.
+A ClojureScript library to help produce meaningful statements out of date-time and intervals.
 
 ## When to use?
-When you wish to show to your users something like `World war 1 started x years ago, went on for y years, and ended z years ago` rather than saying `World war 1 started on Aug 16, 2016, and ended on Nov 19, 2019`. Please see an example of its usage on [WhenInHistory](https://wheninhistory.com).
+When you wish to show to your users `World War 1 started about 105 years ago, was fought for about 4 years, and ended about 101 years ago` instead of showing `World war 1 started on July 28, 1914 and ended on November 11, 1918`. Please see an example of its usage on [WhenInHistory](https://wheninhistory.com).
 
 More on this in the **Premise** and **Usage** sections below.
 
 ## When not to use?
-This is not to be used for date-time related computations in programs. Please use one of [cljs-time](https://github.com/andrewmcveigh/cljs-time) or [tick](https://github.com/juxt/tick) for that purpose.
+This library should not be used for date-time related computations in programs. Please use one of [cljs-time](https://github.com/andrewmcveigh/cljs-time) or [tick](https://github.com/juxt/tick) for that purpose.
 
 ## Premise
-It is often difficult for us to relate to plain numbers without any real-life context to them. It is the context that make any number meaningful to us. For example, it makes little sense to us when we read `this city's population density is xxx`, but if transform this sentence into something like: `the city has capacity to host xxx families, but currently yyy families live there..."`. Suddenly we have some context in which we can understand how densly populated the city is.
+It is difficult for most of us to be able to relate to numbers without any real-life references to relate to. It is the real-life references that make a number meaningful for most of us. For example, this sentence makes little sense to many: `the city's population density is 8000 km-square`. However, this might make much sense: `the city has a capacity to host 2 million families, but currently hosts only about 1 million families`. Based on this, we can infer how densely the city is populated.
 
-So, context matters. However, context is different for different people. The statement `this city's population density is xxx` might be completely fine for someone who is dealing with such numbers on regular basis. Similarly, the statement `the city has capacity to host xxx families, but currently yyy families live there..."` might be interepreted slightly differently by someone living in a village than by someone who has spent the whole life in a densly populated city. But, at least this second statement does help in understanding the population density to people who are not dealing with such numbers on a regular basis - it's another matter that one person might call this city a densly populated, and another might call it sparsely populated. But, with the earlier statement of `this city's population density is xxx`, none of these people can say anything about population density, because they don't have a reference point in their minds to compare to.
+So, real-life references matters.
 
-This situation holds true for any kind of measurement, including time. The statement `World war 1 started on Aug 16, 2016, and ended on Nov 19, 2019` holds little or no meaning to a normal person, but the statement `World war 1 started x years ago, went on for y years, and ended z years ago` makes much sense.
-
-This library is an attempt to provide some useful functions to compose such meaningful statements, given historical date-times.
-
-This library represents an idea. There are different ways to implement this idea, the implementation provided by this library is just one of them.
-
-While this library focuses on date-time, similar implementations can be achieved for other types of measurements, such as length or weight.
+This library represents an idea that can be applied to any measurement context, including time, length, area, or weight. There are different ways to implement this idea, `humane-time` offers just one of them.
 
 ## Usage
 
@@ -55,7 +49,7 @@ The function is defined as:
   [date-string & opts-map]
   ...body...)
 ```
-The function accepts date-string only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. It returns a string similar to: `April 27, 2020` or `Apr 27, 2020` or `Monday, April 27, 2020` or `Mon, April 27, 2020` or `Mon, Apr 27, 2020`. An optional options map can be provided to indicate the return format. It includes the following keys:
+The function accepts `date-string` only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. It returns a string similar to: `April 27, 2020` or `Apr 27, 2020` or `Monday, April 27, 2020` or `Mon, April 27, 2020` or `Mon, Apr 27, 2020`. An optional `opts-map` can be provided to indicate the return format. It includes the following keys:
 ```clojure
 :day-name? - defaults to true
 :short-names? - defaults to false
@@ -63,14 +57,14 @@ The function accepts date-string only in the form of `DD-MM-YYYY` and `YYYY-MM-D
 Examples below:
 
 ```clojure
-(readable-date "15-06-1984")
-=> ""
+(ht/readable-date "15-06-1984")
+=> "Friday, June 15, 1984"
 
-(readable-date "1984-06-15" {:short-names? true})
-=> ""
+(ht/readable-date "1984-06-15" {:short-names? true})
+=> "Fri, Jun 15, 1984"
 
-(readable-date "1984-6-15" {:day-name? false :short-names? true})
-=> ""
+(ht/readable-date "1984-6-15" {:day-name? false :short-names? true})
+=> "Jun 15, 1984"
 ```
 
 #### readable-year
@@ -85,11 +79,11 @@ It returns a human readable string based on the value of number-of-years (`val`)
 Examples below:
 
 ```clojure
-(readable-year 2)
-=> ""
+(ht/readable-year 2)
+=> "2 years"
 
-(readable-year 25678)
-=> ""
+(ht/readable-year 25678)
+=> "25 thousand years"
 ```
 
 #### readable-duration
@@ -100,16 +94,16 @@ The function is defined as:
   ...body...)
 ```
 
-The function accepts `start` and `end` values (strings) only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. It returns a readable duration, but only in the highest unit, with lower bound of the value. Example: if the duration is between 1 and 2 years (ex: 1 year 10 months), then it will return `1 year`. Similarly, if the duration is between 10 to 11 months, then it will return `10 months`. It takes an optional approximation-string, defaults to `about`. The customizable approximation-string helps in including words that gel well with the sentences in which the return value might be included.
+The function accepts `start` and `end` values (strings) only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. It returns a readable duration, but only in the highest unit, with lower bound of the value. Example: if the duration is between 1 and 2 years (ex: 1 year 10 months), then it will return `1 year`. Similarly, if the duration is between 10 to 11 months, then it will return `10 months`. It takes an optional `approximation-string`, which defaults to `about`. Users can replace the default value with strings such as `roughly` or `approximately`.
 
 Examples below:
 
 ```clojure
-(readable-duration {:start "15-06-1984" :end "15-06-1985"})
-=> ""
+(ht/readable-duration {:start "15-06-1984" :end "15-06-1987"})
+=> "about 3 years"
 
-(readable-duration {:start "15-06-1984" :end "15-06-1985" :approximation-string "roughly"})
-=> ""
+(ht/readable-duration {:start "15-06-1984" :end "15-06-1985" :approximation-string "roughly"})
+=> "roughly 1 year"
 ```
 
 #### readable-moment
@@ -120,20 +114,21 @@ The function is defined as:
   ...body...)
 ```
 
-The function accepts date-string only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. The return value describes a moment in histry. It is useful for one-time events. It takes an optional moment descriptor map with the following keys (one or both the keys may be provided in the map):
+The function accepts date-string only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. The return value describes a moment in history. It is useful for one-time events. It takes an optional moment descriptor map (`moement-desc-map`) with the following keys (one or both the keys may be provided in the map):
 ```clojure
 :prefix - defaults to 'Happened'
 :suffix - defaults to 'ago'
 ```
-Again, the customizable moment descriptors allow appropriate words that gel well with the sentences in which the return value might be included.
+Again, the customizable moment descriptors allow users to provide their own strings that are appropriate for their use-cases.
 
 Examples below:
 
 ```clojure
-(readable-moment "15-05-1984")
-=> ""
-(readable-moment "15-05-1984" {:prefix "It happened" :suffix "before"})
-=> ""
+(ht/readable-moment "15-05-1984")
+=> "Happened about 35 years ago"
+
+(ht/readable-moment "15-05-1984" {:prefix "It happened" :suffix "before"})
+=> "It happened about 35 years before"
 
 ```
 
@@ -145,7 +140,7 @@ The function is defined as:
   ...body...)
 ```
 
-The function accepts `start` and `end` values (strings) only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. It takes an optional period description map with the following keys:
+The function accepts `start` and `end` values (strings) only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`. It takes an optional period description map (`period-desc`) with the following keys:
 ```clojure
 :start-desc - defaults to 'Started'.
 :end-desc - defaults to 'Ended'.
@@ -158,25 +153,23 @@ The function accepts `start` and `end` values (strings) only in the form of `DD-
 Examples below:
 
 ```clojure
-(readable-period {:start "15-05-1984" :end "15-05-1986"})
-=> ""
+(ht/readable-period {:start "15-05-1984" :end "15-05-1986"})
+=> "Started about 35 years ago | Went on for about 2 years | Ended about 33 years ago"
 
-(readable-period {:start "15-05-1984" :end "15-05-1986" :period-desc {:separator ", "}})
-=> ""
+(ht/readable-period {:start "15-05-1984" :end "15-05-1986" :period-desc {:separator ", "}})
+=> "Started about 35 years ago, Went on for about 2 years, Ended about 33 years ago"
 
-(readable-period {:start "15-05-1984"
-                  :end "15-05-1986"
-                  :period-desc {:start-desc "went"
-                                :end-desc "and returned"
-                                :period-desc "stayed there for"
-                                :separator ", "}})
-=> ""
-
+(ht/readable-period {:start "28-7-1914"
+                     :end "11-11-1918"
+                     :period-desc {:start-desc "World War 1 started"
+                                   :end-desc "and ended"
+                                   :period-desc "was fought for"
+                                   :separator ", "}})
+=> "World War 1 started about 105 years ago, was fought for about 4 years, and ended about 101 years ago"
 ```
 
 ## Feedback/Discussions
 Github issues are a good way to discuss library related topics. I am also reachable via [CodeRafting](https://www.coderafting.com/).
 
 ## License
-Distributed under the MIT License.
-Copyright (c) 2020 [Amarjeet Yadav](https://www.coderafting.com/)
+Distributed under the MIT License. Copyright (c) 2020 [Amarjeet Yadav](https://www.coderafting.com/)
