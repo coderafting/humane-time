@@ -14,7 +14,7 @@ Take a look at some samples below:
 (ns your-project-namespace
   (:require [humane-time.core :as ht]))
 
-(ht/readable-moment "15-06-1984")
+(ht/readable-moment "15-10-1984")
 => "Happened about 35 years ago"
 
 (ht/readable-period {:start "28-7-1914"
@@ -33,9 +33,9 @@ More on this in the **Premise** and **Usage** sections below.
 This library should not be used for date-time related operations in programs. Please use one of [cljs-time](https://github.com/andrewmcveigh/cljs-time) or [tick](https://github.com/juxt/tick) for that purpose.
 
 ## Premise
-When we look at a fact, we unconsciously think - **`so?`**. This happens because we want to understand how this is related to our lives and what is its significance? If we can understand its significance, we can empathize with the fact.
+Many a times, when we look at a numerical fact, we unconsciously think - **`so?`**. This happens because we want to understand how this is related to our lives and what is its significance? If we can understand its significance, we can empathize with the fact.
 
-For example, **`India got independence on August 15, 1947`** is very different from **`India got independence about 73 years ago`**. We can relate to the second statement in a more meaningful manner than the first one. The second statement invokes some emotions, and we start to think - `wow, it's been over half a century! what all have we achieved so far! very soon we will complete a century!`. None of these emotions are invoked by the first statement.
+For example, **`The World War 2 ended in September 1945`** is very different from **`The World War 2 ended about 75 years ago`**. We can relate to the second statement in a more meaningful manner than the first one. The second statement invokes some emotions, such as - `wow, it's been so long! are we really at peace now!`. Such emotions are not invoked by the first statement.
 
 It is because this is how we communicate and understand things in real-life. Take another example: we normally say **`I returned a week ago from my holidays`**, rather than **`I returned on April 23, 2020`**. In this case, the intention is to let the person know how long it's been since I returned. So, we give a high-level idea of the duration that the person can understand easily.
 
