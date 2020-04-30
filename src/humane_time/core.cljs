@@ -60,7 +60,7 @@
       :else "less than an hour")))
 
 (defn
-  ^{:doc "Accepts start and end strings only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+  ^{:doc "Accepts start and end values (strings) only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
           Returns a readable duration, but only in the highest unit, with lower bound of the value.
           Example: if the duration is between 1 and 2 years (ex: 1 year 10 months), then it will return '1 year'.
           Similarly, if the duration is between 10 to 11 months, then it will return '10 months'.
@@ -127,7 +127,7 @@
        (period-helper-end end period-desc-map)))
 
 (defn readable-period
-  "Accepts start and end strings only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+  "Accepts start and end values (strings) only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
    Takes an optional period description map with the following keys:
    :start-desc - defaults to 'Started'.
    :end-desc - defaults to 'Ended'.

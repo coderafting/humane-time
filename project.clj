@@ -1,8 +1,9 @@
 (defproject coderafting/humane-time "0.1.0"
-            :description "A ClojureScript library to produce human readable date-time and intervals."
-            :url "https://github.com/coderafting/humane-time"
-            :license {:name "The MIT License"
-                      :url "https://opensource.org/licenses/MIT"}
+  :author "Amarjeet Yadav <https://www.coderafting.com/>"
+  :description "A ClojureScript library to produce human readable date-time and intervals."
+  :url "https://github.com/coderafting/humane-time"
+  :license {:name "The MIT License"
+            :url "https://opensource.org/licenses/MIT"}
   :dependencies
   [[org.clojure/clojure "1.10.1" :scope "provided"]
    [org.clojure/clojurescript "1.10.597" :scope "provided"]
@@ -73,12 +74,12 @@
                       :source-map    true
                       :pretty-print  true}}}}
     :doo {:build "test"}}}
-    :aliases
-    {"test"
-     ["do"
-      ["clean"]
-      ["with-profile" "test" "doo" "node" "once"]]
-     "test-watch"
-     ["do"
-      ["clean"]
-      ["with-profile" "test" "doo" "node"]]})
+  :aliases
+  {"test"
+   ["do"
+    ["clean"]
+    ["with-profile" "test" "doo" "node" "once"]]
+   "test-watch"
+   ["do"
+    ["clean"]
+    ["with-profile" "test" "doo" "node"]]})
