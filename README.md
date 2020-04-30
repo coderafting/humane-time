@@ -5,7 +5,7 @@
 A ClojureScript library to help produce meaningful statements out of date-time and intervals.
 
 ## When to use?
-When you wish to show to your users `World War 1 started about 105 years ago, was fought for about 4 years, and ended about 101 years ago` instead of showing `World war 1 started on July 28, 1914 and ended on November 11, 1918`. Please see an example of its usage on [WhenInHistory](https://wheninhistory.com).
+When you wish to show to your users `World War 1 started about 105 years ago, was fought for about 4 years, and ended about 101 years ago`, instead of showing `World war 1 started on July 28, 1914 and ended on November 11, 1918`. Please see an example of its usage on [WhenInHistory](https://wheninhistory.com).
 
 More on this in the **Premise** and **Usage** sections below.
 
@@ -13,11 +13,11 @@ More on this in the **Premise** and **Usage** sections below.
 This library should not be used for date-time related computations in programs. Please use one of [cljs-time](https://github.com/andrewmcveigh/cljs-time) or [tick](https://github.com/juxt/tick) for that purpose.
 
 ## Premise
-It is difficult for most of us to be able to relate to numbers without any real-life references to relate to. It is the real-life references that make a number meaningful for most of us. For example, this sentence makes little sense to many: `the city's population density is 8000 km-square`. However, this might make much sense: `the city has a capacity to host 2 million families, but currently hosts only about 1 million families`. Based on this, we can infer how densely the city is populated.
+It is difficult for most of us to be able to relate to numbers without any real-life references to relate to. It is the real-life references that make a number meaningful for most of us. For example, this sentence makes little sense to many: `the city's population density is 8000 people per km-square`. However, this one might make much sense: `the city has a capacity to host 2 million families, but currently hosts only about 1 million families`. Based on this, we can infer how densely the city is populated.
 
-So, real-life references matters.
+So, real-life references matter.
 
-This library represents an idea that can be applied to any measurement context, including time, length, area, or weight. There are different ways to implement this idea, `humane-time` offers just one of them.
+This library represents an idea that can be applied to any measurement context, including `time`, `length`, `area`, or `weight`. There are different ways to implement this idea, `humane-time` offers just one of them.
 
 ## Usage
 
@@ -26,7 +26,7 @@ Add this library as a dependency to your project as:
 ```clojure
 [coderafting/humane-time "0.1.0"]
 ```
-Require `humane-time.core` in your working namespace. It is advisable that you only use `humane-time.core` namespace and its public functions.
+Require `humane-time.core` in your working namespace. It is advisable that you only use `humane-time.core` namespace.
 ```clojure
 (ns your-project-namespace
   (:require [humane-time.core :as ht]))
@@ -74,7 +74,7 @@ The function is defined as:
   [val]
   ...body...)
 ```
-It returns a human readable string based on the value of number-of-years (`val`). Currently, it uses the US counting system. Please refer: https://www.britannica.com/topic/large-numbers-1765137.
+It returns a human readable string based on the value of number-of-years (`val`). Currently, it uses the [US counting system](https://www.britannica.com/topic/large-numbers-1765137).
 
 Examples below:
 
@@ -172,4 +172,4 @@ Examples below:
 Github issues are a good way to discuss library related topics. I am also reachable via [CodeRafting](https://www.coderafting.com/).
 
 ## License
-Distributed under the MIT License. Copyright (c) 2020 [Amarjeet Yadav](https://www.coderafting.com/)
+Distributed under the MIT License. Copyright (c) 2020 [Amarjeet Yadav](https://www.coderafting.com/).
