@@ -7,7 +7,7 @@ A ClojureScript library to help produce meaningful statements out of date-time a
 ## When to use?
 When you wish to show to your users a meaningful description of a date-time or an interval.
 
-For example, if a time-interval has a start (`15-05-1984`) and an end date (`15-05-1986`), this library can help you generate a description as `Started about 35 years ago, Went on for about 2 years, Ended about 33 years ago`.
+For example, if a time-interval has a start (`15-05-1984`) and an end date (`15-05-1986`), this library can help you generate a description as **Started about 35 years ago, Went on for about 2 years, Ended about 33 years ago**.
 
 Take a look at some samples below:
 ```clojure
@@ -33,13 +33,13 @@ More on this in the **Premise** and **Usage** sections below.
 This library should not be used for date-time related operations in programs. Please use one of [cljs-time](https://github.com/andrewmcveigh/cljs-time) or [tick](https://github.com/juxt/tick) for that purpose.
 
 ## Premise
-When we look at a fact, we unconsciously think - `so?`. This happens because we want to understand how this is related to our lives and what is its significance? If we can understand its significance, we can empathize with the fact.
+When we look at a fact, we unconsciously think - **so?**. This happens because we want to understand how this is related to our lives and what is its significance? If we can understand its significance, we can empathize with the fact.
 
-For example, `India got independence on August 15, 1947` is very different from `India got independence about 73 years ago`. We can relate to the second statement in a more meaningful manner than the first one. The second statement invokes some emotions, and we start to think - `wow, it's been over half a century! what all have we achieved so far! very soon we will complete a century!`. None of these emotions are invoked by the first statement.
+For example, **India got independence on August 15, 1947** is very different from **India got independence about 73 years ago**. We can relate to the second statement in a more meaningful manner than the first one. The second statement invokes some emotions, and we start to think - `wow, it's been over half a century! what all have we achieved so far! very soon we will complete a century!`. None of these emotions are invoked by the first statement.
 
-It is because this is how we communicate and understand things in real-life. Take another example: we normally say `I returned a week ago from my holidays`, rather than `I returned on April 23, 2020`. In this case, the intention is to let the person know how long it's been since I returned. So, we give a high-level idea of the duration that the person can understand easily.
+It is because this is how we communicate and understand things in real-life. Take another example: we normally say **I returned a week ago from my holidays**, rather than **I returned on April 23, 2020**. In this case, the intention is to let the person know how long it's been since I returned. So, we give a high-level idea of the duration that the person can understand easily.
 
-This idea applies to any measurement context, including `time`, `length`, `area`, or `weight`. For example, the sentence `the city's population density is 8000 people per km-square` makes little sense to many. However, this one might make much sense: `the city has a capacity to host 2 million families, but currently hosts only about 1 million families`. Based on this, we can infer how densely the city is populated.
+This idea applies to any measurement context, including `time`, `length`, `area`, or `weight`. For example, the sentence **the city's population density is 8000 people per km-square** makes little sense to many. However, this one might make much sense: **the city has a capacity to host 2 million families, but currently hosts only about 1 million families**. Based on this, we can infer how densely the city is populated.
 
 This library intends to offer a helping hand in providing meanings to facts in the context of `time`.
 
