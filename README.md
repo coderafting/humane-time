@@ -5,19 +5,43 @@
 A ClojureScript library to help produce meaningful statements out of date-time and intervals.
 
 ## When to use?
-When you wish to show to your users `World War 1 started about 105 years ago, was fought for about 4 years, and ended about 101 years ago`, instead of showing `World war 1 started on July 28, 1914 and ended on November 11, 1918`. Please see an example of its usage on [WhenInHistory](https://wheninhistory.com).
+When you wish to show to your users a meaningful description of a date-time or an interval.
+
+For example, if a time-interval has a start (`15-05-1984`) and an end date (`15-05-1986`), this library can help you generate a description as `Started about 35 years ago, Went on for about 2 years, Ended about 33 years ago`.
+
+Take a look at some samples below:
+```clojure
+(ns your-project-namespace
+  (:require [humane-time.core :as ht]))
+
+(ht/readable-moment "15-06-1984")
+=> "Happened about 35 years ago"
+
+(ht/readable-period {:start "28-7-1914"
+                     :end "11-11-1918"
+                     :period-desc {:start-desc "World War 1 started"
+                                   :end-desc "and ended"
+                                   :period-desc "was fought for"
+                                   :separator ", "}})
+=> "World War 1 started about 105 years ago, was fought for about 4 years, and ended about 101 years ago"
+```
+Please see an example of its usage on [WhenInHistory](https://wheninhistory.com).
 
 More on this in the **Premise** and **Usage** sections below.
 
 ## When not to use?
-This library should not be used for date-time related computations in programs. Please use one of [cljs-time](https://github.com/andrewmcveigh/cljs-time) or [tick](https://github.com/juxt/tick) for that purpose.
+This library should not be used for date-time related operations in programs. Please use one of [cljs-time](https://github.com/andrewmcveigh/cljs-time) or [tick](https://github.com/juxt/tick) for that purpose.
 
 ## Premise
-It is difficult for most of us to be able to relate to numbers without any real-life references to relate to. It is the real-life references that make a number meaningful for most of us. For example, this sentence makes little sense to many: `the city's population density is 8000 people per km-square`. However, this one might make much sense: `the city has a capacity to host 2 million families, but currently hosts only about 1 million families`. Based on this, we can infer how densely the city is populated.
+When we look at a fact, we unconsciously think - `so?`. This happens because we want to understand how this is related to our lives and what is its significance? If we can understand its significance, we can empathize with the fact.
 
-So, real-life references matter.
+For example, `India got independence on August 15, 1947` is very different from `India got independence about 73 years ago`. We can relate to the second statement in a more meaningful manner than the first one. The second statement invokes some emotions, and we start to think - `wow, it's been over half a century! what all have we achieved so far! very soon we will complete a century!`. None of these emotions are invoked by the first statement.
 
-This library represents an idea that can be applied to any measurement context, including `time`, `length`, `area`, or `weight`. There are different ways to implement this idea, `humane-time` offers just one of them.
+It is because this is how we communicate and understand things in real-life. Take another example: we normally say `I returned a week ago from my holidays`, rather than `I returned on April 23, 2020`. In this case, the intention is to let the person know how long it's been since I returned. So, we give a high-level idea of the duration that the person can understand easily.
+
+This idea applies to any measurement context, including `time`, `length`, `area`, or `weight`. For example, the sentence `the city's population density is 8000 people per km-square` makes little sense to many. However, this one might make much sense: `the city has a capacity to host 2 million families, but currently hosts only about 1 million families`. Based on this, we can infer how densely the city is populated.
+
+This library intends to offer a helping hand in providing meanings to facts in the context of `time`.
 
 ## Usage
 
