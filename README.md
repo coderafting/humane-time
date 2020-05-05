@@ -25,7 +25,6 @@ Take a look at some samples below:
                                    :separator ", "}})
 => "World War 1 started about 105 years ago, was fought for about 4 years, and ended about 101 years ago"
 ```
-Please see an example of its usage on [WhenInHistory](https://wheninhistory.com).
 
 More on this in the **Premise** and **Usage** sections below.
 
