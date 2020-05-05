@@ -1,5 +1,5 @@
 (ns ^{:doc "Contains data and functions to be used by the functions in the core namespace."
-      :todo {1 "Possibility of accepting '1918-11-11T11:10:50' date-time format."
+      :todo {1 "Possibility of accepting `1918-11-11T11:10:50` date-time format."
              2 "Option for users to provide customer validators."}}
   humane-time.ops
   (:require [cljs.reader :as r]
@@ -23,7 +23,7 @@
 
 (defn datetime-descriptor
   "Takes a date string and returns a map after some destructuring. 
-   Accepts date-string only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M."
+   Accepts date-string only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`."
   [date-string]
   (let [ds (clojure.string/split date-string #"-")
         y (if (= (count (last ds)) 4) (last ds) (first ds))
@@ -46,9 +46,9 @@
 (defn duration-descriptor
   "Returns a map that describes the duration between a start and end-time in different units.
    For each unit, the value semantics is of lower bound. To elaborate:
-   If the difference (in years) is 2 years and 10 months, then the value of :years will be 2, not 3. But, the value of :months will be 34.
-   Similarly, if the difference in months is 5 months and 3 weeks, the the value of :months will be 5, not 6. But, the value of :weeks will be 23.
-   If no end-time is provided, the the current time will be considered as the end-time."
+   If the difference (in years) is 2 years and 10 months, then the value of `:years` will be 2, not 3. But, the value of `:months` will be 34.
+   Similarly, if the difference in months is 5 months and 3 weeks, the the value of `:months` will be 5, not 6. But, the value of `:weeks` will be 23.
+   If no `end-time` is provided, the the current time will be considered as the `end-time`."
   [date-string & end-time] 
   (let [intrvl (t/interval (:datetime-obj (datetime-descriptor date-string))
                            (if end-time (:datetime-obj (datetime-descriptor (first end-time))) (t/time-now)))]
@@ -59,6 +59,6 @@
      :hours (t/in-hours intrvl)}))
 
 (defn singular->plural
-  "Simply adds an 's' at the end of the singular-text arg if val is greater than 1."
+  "Simply adds an `s` at the end of the singular-text arg if `val` is greater than 1."
   [singular-text val]
   (if (<= val 1) singular-text (str singular-text "s")))

@@ -1,15 +1,15 @@
 (ns ^{:doc "Contains functions to be exposed to library users."
-      :todo {1 "Possibility of making it available for both clj and cljs."}}
+      :todo {1 "Possibility of making it available for both `clj` and `cljs`."}}
   humane-time.core
   (:require [humane-time.ops :as ops]))
 
 (defn readable-date
-  "Accepts date-string only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+  "Accepts date-string only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`.
    Returns a string similar to: 
-   April 27, 2020 or Apr 27, 2020 or Monday, April 27, 2020 or Mon, April 27, 2020 or Mon, Apr 27, 2020.
+   `April 27, 2020` or `Apr 27, 2020` or `Monday, April 27, 2020` or `Mon, April 27, 2020` or `Mon, Apr 27, 2020`.
    The optional options map dictates the return format. It includes the following keys:
-   :day-name? - defaults to true. 
-   :short-names? - defaults to false."
+    - `:day-name?` - defaults to `true`. 
+    - `:short-names?` - defaults to `false`."
   [date-string & opts-map]
   (let [dt (ops/datetime-descriptor date-string)]
     (str (if (or (nil? (:day-name? (first opts-map))) (:day-name? (first opts-map)))
@@ -60,14 +60,14 @@
       :else "less than an hour")))
 
 (defn
-  ^{:doc "Accepts start and end values (strings) only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+  ^{:doc "Accepts `start` and `end` values (strings) only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`.
           Returns a readable duration, but only in the highest unit, with lower bound of the value.
-          Example: if the duration is between 1 and 2 years (ex: 1 year 10 months), then it will return '1 year'.
-          Similarly, if the duration is between 10 to 11 months, then it will return '10 months'.
-          Takes an optional approximation-string, defaults to 'about'."
-    :todo {1 "Use error-margin to compute approx timeline duration, rather than simply taking the lower bounds.
-              Maybe, an alternate return value can be offered with better approximation, with an 'about' string attached in each return value."
-           2 "Return a string that can describe the duration as: 5 years, 10 months, 2 weeks, 4 days, and 2 hours."}} 
+          Example: if the duration is between 1 and 2 years (ex: 1 year 10 months), then it will return `1 year`.
+          Similarly, if the duration is between 10 to 11 months, then it will return `10 months`.
+          Takes an optional `approximation-string`, defaults to `about`."
+    :todo {1 "Use `error-margin` to compute approx timeline duration, rather than simply taking the lower bounds.
+              Maybe, an alternate return value can be offered with better approximation, with an `about` string attached in each return value."
+           2 "Return a string that can describe the duration as: `5 years, 10 months, 2 weeks, 4 days, and 2 hours.`"}} 
   readable-duration
   [{:keys [start end approximation-string]}]
   (cond
@@ -83,11 +83,11 @@
     :else (throw (ExceptionInfo. (str "Invalid inputs - :start " start ", :end " end)))))
 
 (defn readable-moment
-  "Accepts date-string only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+  "Accepts `date-string` only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`.
    Describes a moment in histry. Useful for one-time events.
    Takes an optional moment descriptor map with the following keys:
-   :prefix - defaults to 'Happened'.
-   :suffix - defaults to 'ago'.
+    - `:prefix` - defaults to `Happened`.
+    - `:suffix` - defaults to `ago`.
    One or both the keys may be provided in the map."
   [date-string & moement-desc-map]
   (str (or (:prefix (first moement-desc-map)) "Happened")
@@ -127,14 +127,14 @@
        (period-helper-end end period-desc-map)))
 
 (defn readable-period
-  "Accepts start and end values (strings) only in the form of 'DD-MM-YYYY' and 'YYYY-MM-DD' formats. DD and MM could just be D or M.
+  "Accepts `start` and `end` values (strings) only in the form of `DD-MM-YYYY` and `YYYY-MM-DD` formats. `DD` and `MM` could just be `D` or `M`.
    Takes an optional period description map with the following keys:
-   :start-desc - defaults to 'Started'.
-   :end-desc - defaults to 'Ended'.
-   :period-desc - defaults to 'Went on for'.
-   :approximation-string - defaults to 'about'.
-   :past-indicator - defaults to 'ago'.
-   :separator - defaults to ' | '. Note that there are spaces before and after the separator."
+    - `:start-desc` - defaults to 'Started'.
+    - `:end-desc` - defaults to 'Ended'.
+    - `:period-desc` - defaults to 'Went on for'.
+    - `:approximation-string` - defaults to 'about'.
+    - `:past-indicator` - defaults to 'ago'.
+    - `:separator` - defaults to ' | '. Note that there are spaces before and after the separator."
   [{:keys [start end period-desc]}]
   (cond
     (and start (nil? end)) (period-helper-start start period-desc)
