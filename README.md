@@ -197,7 +197,7 @@ Github issues are a good way to discuss library related topics. I am also reacha
 ## Some high-level TODOs (not in the order of priority)
 - `Clj` compatibility
 - Accept `1918-11-11T11:10:50` date-time format.
-- Option for users to provide customer date-time validators, for faster validation than the default one.
+- Option for users to provide custome date-time validators, for faster validation than the default one.
 - Include `future` date-time and intervals.
 - Some more friendly options, such as `tomorrow` and `yesterday`.
 - Option to spell out the numbers. Ex: `2 days ago` and `two days ago`.
