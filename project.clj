@@ -1,5 +1,5 @@
 (defproject coderafting/humane-time "0.1.0"
-  :author "Amarjeet Yadav <https://www.coderafting.com/>"
+  :author "Amarjeet Yadav <https://coderafting.com/>"
   :description "A ClojureScript library to produce human readable date-time and intervals."
   :url "https://github.com/coderafting/humane-time"
   :license {:name "The MIT License"
